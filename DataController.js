@@ -78,6 +78,22 @@ class DataController {
       }
     }
   }
+
+  async checkLogin(req, res) {
+    try {
+      if (req.query) {
+        const { login } = req.query;
+        const isSome = this.dataUsers.some((user) => user.login === login);
+
+        setTimeout(() => {
+          const data = { result: isSome };
+          return res.json(data);
+        }, 2000);
+      }
+    } catch (e) {
+      res.status(500).json({ message });
+    }
+  }
 }
 
 export default DataController;
