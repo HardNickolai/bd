@@ -5,7 +5,7 @@ class DataController {
     try {
       const data = req.body;
       const { login, password } = data;
-
+      console.log(data, "data");
       if (login && password) {
         const isSome = this.dataUsers.some((user) => user.login === login);
         if (isSome) {
@@ -55,7 +55,14 @@ class DataController {
             setTimeout(() => {
               data.access_token =
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30";
-              return res.json({ message: "Успешно авторизован", data });
+              return res.json({
+                message: "Успешно авторизован",
+                data: {
+                  login: user.login,
+                  email: user.email,
+                  phone: user.phone,
+                },
+              });
             }, 2000);
           } else {
             throw new Error("Не верный пароль");
@@ -73,6 +80,9 @@ class DataController {
         message === "Не верный логин"
       ) {
         res.status(400).json({ message });
+        //         new Promise((resolve) => {
+        //   resolve.status(400).json({ message });
+        // });
       } else {
         res.status(500).json({ message });
       }
@@ -90,6 +100,25 @@ class DataController {
           return res.json(data);
         }, 2000);
       }
+    } catch (e) {
+      res.status(500).json({ message });
+    }
+  }
+
+  async editProfile(req, res) {
+    try {
+      const data = req.body;
+      const { login } = data;
+      console.log(this.dataUsers);
+      this.dataUsers = this.dataUsers.map((user) => {
+        if (user.login === login) {
+          user = data;
+        }
+        return user;
+      });
+      setTimeout(() => {
+        return res.json({ message: "Успешно изменен" });
+      }, 2000);
     } catch (e) {
       res.status(500).json({ message });
     }
