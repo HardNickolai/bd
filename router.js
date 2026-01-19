@@ -10,5 +10,6 @@ router.post("/create-client", (req, res) =>
 router.post("/login", (req, res) => dataController.login(req, res));
 router.get("/check-login", (req, res) => dataController.checkLogin(req, res));
 router.put("/edit-profile", (req, res) => dataController.editProfile(req, res));
+router.get("/categories", (req, res) => dataController.getCategories(req, res));
 
 export default router;

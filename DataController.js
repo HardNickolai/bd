@@ -1,5 +1,39 @@
 class DataController {
   dataUsers = [];
+  dataCategories = [
+    {
+      category: "Телефоны",
+      items: [
+        { name: "iPhone 15 Pro", price: 99999, quantity: 5, inStock: true },
+        { name: "Samsung Galaxy S24", price: 89999, quantity: 3, inStock: true },
+        { name: "Xiaomi 14", price: 49999, quantity: 0, inStock: false },
+      ],
+    },
+    {
+      category: "Аксесуары",
+      items: [
+        { name: "Чехол для телефона", price: 999, quantity: 20, inStock: true },
+        { name: "Зарядное устройство", price: 1999, quantity: 15, inStock: true },
+        { name: "Наушники Bluetooth", price: 4999, quantity: 0, inStock: false },
+      ],
+    },
+    {
+      category: "Планшеты",
+      items: [
+        { name: "iPad Pro", price: 129999, quantity: 2, inStock: true },
+        { name: "Samsung Galaxy Tab", price: 59999, quantity: 4, inStock: true },
+        { name: "Lenovo Tab", price: 29999, quantity: 0, inStock: false },
+      ],
+    },
+    {
+      category: "Smart-часы",
+      items: [
+        { name: "Apple Watch Series 9", price: 39999, quantity: 8, inStock: true },
+        { name: "Samsung Galaxy Watch", price: 29999, quantity: 6, inStock: true },
+        { name: "Xiaomi Mi Band", price: 4999, quantity: 0, inStock: false },
+      ],
+    },
+  ];
 
   async createClient(req, res) {
     try {
@@ -121,6 +155,16 @@ class DataController {
       }, 2000);
     } catch (e) {
       res.status(500).json({ message });
+    }
+  }
+
+  async getCategories(req, res) {
+    try {
+      setTimeout(() => {
+        return res.json({ categories: this.dataCategories });
+      }, 2000);
+    } catch (e) {
+      res.status(500).json({ message: e.message });
     }
   }
 }
