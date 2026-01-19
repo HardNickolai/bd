@@ -9,6 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(fileUpload({}));
+app.use('/images', express.static('images'));
 app.use('/api', router);
 
 async function startApp() {

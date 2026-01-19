@@ -4,9 +4,15 @@ class DataController {
     {
       category: "Телефоны",
       items: [
-        { name: "iPhone 15 Pro", price: 99999, quantity: 5, inStock: true },
-        { name: "Samsung Galaxy S24", price: 89999, quantity: 3, inStock: true },
-        { name: "Xiaomi 14", price: 49999, quantity: 0, inStock: false },
+        { name: "iPhone 17", price: 76000, quantity: 5, inStock: true, image: "/images/phones/iphone17.jpg" },
+        { name: "iPhone 17 Pro", price: 97000, quantity: 5, inStock: true, image: "/images/phones/iphone17pro.jpg" },
+        { name: "iPhone 17 Pro Max", price: 106000, quantity: 5, inStock: true, image: "/images/phones/iphone17promax.jpg" },
+        { name: "Samsung Galaxy S25", price: 49000, quantity: 3, inStock: true, image: "/images/phones/samsungGalaxyS25.jpeg" },
+        { name: "Samsung Galaxy S24+", price: 60000, quantity: 3, inStock: true, image: "/images/phones/samsungGalaxyS25plus.jpeg" },
+        { name: "Samsung Galaxy S25 Ultra", price: 76000, quantity: 3, inStock: true, image: "/images/phones/samsungGalaxyS25Ultra.jpeg" },
+        { name: "POCO F7", price: 31000, quantity: 0, inStock: false, image: "/images/phones/POCOF7.jpeg" },
+        { name: "POCO F7 Pro", price: 37000, quantity: 0, inStock: false, image: "/images/phones/POCOF7Pro.jpeg" },
+        { name: "POCO F7 Ultra", price: 54000, quantity: 0, inStock: false, image: "/images/phones/POCOF7Ultra.jpeg" },
       ],
     },
     {
@@ -161,7 +167,15 @@ class DataController {
   async getCategories(req, res) {
     try {
       setTimeout(() => {
-        return res.json({ categories: this.dataCategories });
+        const baseUrl = `${req.protocol}://${req.get('host')}`;
+        const categoriesWithFullUrls = this.dataCategories.map(category => ({
+          ...category,
+          items: category.items.map(item => ({
+            ...item,
+            image: item.image ? `${baseUrl}${item.image}` : undefined
+          }))
+        }));
+        return res.json({ categories: categoriesWithFullUrls });
       }, 2000);
     } catch (e) {
       res.status(500).json({ message: e.message });
